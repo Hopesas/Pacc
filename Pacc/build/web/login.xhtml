@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <link rel="stylesheet" href="#{resource['css:bootstrap.css']}" />
+        <div align="center">
+            <h:graphicImage value="#{resource['img:Header.png']}" height="250" />
+        </div>
+        <title>Plan de Atención de Cuidado</title>
+    </h:head>
+    <h:body  style="background-color: #FFF">
+        <div class="hero-unit" style="background-color: #FFF">
+            <div class="container">
+                <div class="row">
+                    <div align="center">
+                        <h:graphicImage value="#{resource['img:hospital.png']}" style="height: 150px" />
+                        <h3>Clínica Montserrat</h3>
+                        <h:form id="loginForm">
+                            <h:panelGrid id="form" columns="3">
+                                Usuario:<br/>
+                                <h:inputText id="nombreInput"  autocomplete="off" class="input-xlarge" value="#{LoginBean.nombre}" required="true"></h:inputText>
+                                <p:message id="nombreMessage" for="nombreInput" display="icon" /> 
+                                Contraseña:<br/>
+                                <h:inputSecret id="passwordInput" autocomplete="off" class="input-xlarge" value="#{LoginBean.password}" required="true"></h:inputSecret>
+                                <p:message id="passwordMessage" for="passwordInput" display="icon" />  
+                            </h:panelGrid>
+                            <p:commandButton id="loginBTN" value="Login" action="#{LoginBean.login(request)}" update="form"></p:commandButton>
+                        </h:form>
+                        <p:messages id="loginMessage" showDetail="false" closable="true"/> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>

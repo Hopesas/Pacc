@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <link rel="stylesheet" href="#{resource['css:bootstrap.css']}" />
+        <div align="center">
+            <h:graphicImage value="#{resource['img:Header.png']}" height="250" />
+        </div>
+        <div align="right" style="padding: 5px">
+            bienvenid@: #{LogoutBean.displayName(request)}
+            <h:form>
+                <h:commandButton class="btn btn-primary" value="Inicio" action="home.xhtml?faces-redirect=true"/>
+                <h:commandButton class="btn btn-primary" value="Administrar Usuarios" rendered="#{LogoutBean.isAdministrator(request)}" action="#{LogoutBean.gotoAdminUser(request)}"/>
+                <h:commandButton class="btn btn-primary" value="Buscar Plan" rendered="#{LogoutBean.isAdministrator(request)}" action="pacc.xhtml?faces-redirect=true"/>
+                <h:commandButton class="btn btn-primary" value="Criterios Planes" rendered="#{LogoutBean.isAdministrator(request)}" action="buscarPacc.xhtml?faces-redirect=true"/>
+                <h:commandButton class="btn btn-primary" value="Log Out" action="#{LogoutBean.logout(request)}"/>
+            </h:form>
+        </div>
+    </h:head>
+</html>

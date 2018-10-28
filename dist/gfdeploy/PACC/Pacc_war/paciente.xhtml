@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <ui:insert name="header" >
+            <ui:include src="header.xhtml" />
+        </ui:insert>
+        <title>Plan de Atención Integral</title>
+    </h:head>
+    <h:body  style="background-color: #eeeeee">
+        <div class="hero-unit">
+            <div class="container">
+                <div class="row" align="center">
+                    <h:form>
+                        <h:outputText value="Ingrese el Número de Identificación: " />
+                        <p:inputText id="documentoBuscar" value="#{PacienteBean.documento}" /> <br/>
+                        <p:commandButton styleClass="btn btn-primary" value="Buscar" action="#{PacienteBean.buscarPaciente()}" />
+                        <p:commandButton styleClass="btn btn-primary" value="Empezar" action="#{PacienteBean.goStepOne()}" />
+                    </h:form>
+                    <p:dialog id="errorDlg" header="Error" widgetVar="errorDialog" modal="true" appendToBody="true"
+                        showEffect="explode" hideEffect="explode" >
+                        <h:form>
+                            <h:outputText value="El paciente no se encuentra registrado, por favor revise la
+                                          información y registrelo" /><br/>
+                            <p:commandButton value="Ok" style="float: right" onclick="errorDialog.hide()"/>
+                        </h:form>
+                    </p:dialog>
+                    <p:dialog id="errorSelDlg" header="Error" widgetVar="errorSelDialog" modal="true" appendToBody="true"
+                        showEffect="explode" hideEffect="explode" >
+                        <h:form>
+                            <h:outputText value="Por favor seleccione un paciente." /><br/>
+                            <p:commandButton value="Ok" style="float: right" onclick="errorSelDialog.hide()"/>
+                        </h:form>
+                    </p:dialog>
+                    <p:dialog id="createDlg" widgetVar="createDialog"
+                  header="Crear" appendToBody="true" modal="true" showEffect="explode" hideEffect="explode" >
+                        <h:form id="newUserData">
+                                <h:panelGrid columns="2">
+                                    <h:outputText value="Documento:" />
+                                    <h:inputText value="#{PacienteBean.paciente.documento}" required="true"/>
+                                    <h:outputText value="Nombre:" />
+                                    <h:inputText value="#{PacienteBean.paciente.nombre}" required="true"/>
+                                    <h:outputText value="Segundo Nombre:" />
+                                    <h:inputText value="#{PacienteBean.paciente.segundoNombre}"/>
+                                    <h:outputText value="Apellido:" />
+                                    <h:inputText value="#{PacienteBean.paciente.apellido}" required="true" />
+                                    <h:outputText value="Segundo Apellido:" />
+                                    <h:inputText value="#{PacienteBean.paciente.segundoApellido}"/>
+                                    <h:outputText value="Fecha de Nacimiento " />
+                                    <p:calendar effect="fadeIn" value="#{PacienteBean.paciente.fechaDeNacimiento}"/>  
+                                    <h:outputText value="eps" />
+                                    <h:inputText value="#{PacienteBean.paciente.eps}" /> 
+                                    <h:outputText value="Servicio" />
+                                    <h:inputText value="#{PacienteBean.paciente.servicio}" />
+                                    <h:outputText value="Observaciones" />
+                                    <h:inputTextarea value="#{PacienteBean.paciente.observaciones}" />
+                                </h:panelGrid>
+                                <p:commandButton value="Crear" action="#{PacienteBean.createPaciente()}" ajax="false"/>
+                                <p:commandButton value="Cancelar" onclick="createDialog.hide();" ajax="false"/>
+                        </h:form>
+                    </p:dialog>
+                    <p:messages id="pacienteMessage" showDetail="false" closable="true"/>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>
+

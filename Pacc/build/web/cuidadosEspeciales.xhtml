@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <ui:insert name="header" >
+            <ui:include src="header.xhtml" />
+        </ui:insert>
+        <title>Plan de Atención</title>
+    </h:head>
+    <h:body  style="background-color: #eeeeee">
+        <h:panelGroup id="formGrupo">
+            <p:dataTable id="grupoTable" var="cuidado" value="#{CuidadosEspecialesBean.cuidadosEspecialesList}"
+                         selection="#{CuidadosEspecialesBean.selectedCuidadoEspecial}" selectionMode="single" rowKey="#{cuidado.id}" >
+                    
+                <p:ajax event="rowSelect" listener="#{CuidadosEspecialesBean.onRowSelect}"/>
+               
+                <f:facet id="titulo" name="header">
+                    Cuidados Especiales de Promoción y Prevención
+                </f:facet>
+
+                <p:column headerText="Nº">
+                    #{cuidado.id}
+                </p:column>
+
+                <p:column headerText="Código">
+                    #{cuidado.descripcion}
+                </p:column>
+            </p:dataTable>
+        </h:panelGroup>
+        <div align="center">
+            <h:form>
+                <p:commandButton styleClass="btn btn-primary" id="continueBtn1" value="Continuar" action="#{CuidadosEspecialesBean.continueStepThree()}"></p:commandButton>
+                <p:commandButton styleClass="btn btn-primary" id="backBtn3" value="Volver" action="#{CuidadosEspecialesBean.backStepCuidadosNutricionales()}"></p:commandButton>
+            </h:form>
+        </div>
+        <p:dialog id="errorDlg" header="Error" widgetVar="errorDialog" modal="true" appendToBody="true"
+                  showEffect="explode" hideEffect="explode" >
+            <h:form>
+                <h:outputText value="Por favor seleccione un Cuidado Especial" /><br/>
+                <p:commandButton value="Ok" style="float: right" onclick="errorDialog.hide()"/>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>

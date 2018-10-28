@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <ui:insert name="header" >
+            <ui:include src="header.xhtml" />
+        </ui:insert>
+        <title>Plan de Atención Integral</title>
+    </h:head>
+    <h:body  style="background-color: #eeeeee">  
+        #{UserAsBean.hasRights()}
+        <p:messages id="passMessage" showDetail="false" closable="true"/> 
+        <p:messages id="administrarMessage" showDetail="false" closable="true"/> 
+        <h:panelGroup id="formUseras">
+            <p:dataTable id="userasTable" var="useras" value="#{UserAsBean.userasList}" paginator="true" rows="50"
+                     selection="#{UserAsBean.selectedUsera}" selectionMode="single" rowKey="#{useras.documento}" >
+                    
+                <p:ajax event="rowSelect" listener="#{UserAsBean.onRowSelect}"/>
+               
+                <f:facet id="titulo" name="header">
+                    <h:form id="buttons">
+                        <p:commandButton style="float: left" value="Crear"  action="#{UserAsBean.showDialog}"/>
+                        <p:commandButton style="float: left" value="Editar" action="#{UserAsBean.showEditDialog}" />
+                        <p:commandButton style="float: right" value="Eliminar" action="#{UserAsBean.showDeleteDialog}" />
+                    </h:form> 
+                    Usuarios
+                </f:facet>
+
+                <p:column headerText="Documento">
+                    #{useras.documento}
+                </p:column>
+
+                <p:column headerText="Nombre">
+                    #{useras.nombre}
+                </p:column>
+
+                <p:column headerText="Apellido">
+                    #{useras.apellido}
+                </p:column>
+
+                <p:column headerText="Ususuario">
+                    #{useras.username}
+                </p:column>
+
+            </p:dataTable>
+        </h:panelGroup>
+        <p:dialog id="errorDlg" header="Error" widgetVar="errorDialog" modal="true" appendToBody="true"
+                  showEffect="explode" hideEffect="explode" >
+            <h:form>
+                <h:outputText value="Por favor seleccione un usuario" /><br/>
+                <p:commandButton value="Ok" style="float: right" onclick="errorDialog.hide()"/>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog id="createDlg" widgetVar="createDialog"
+                  header="Crear" appendToBody="true" modal="true" showEffect="explode" hideEffect="explode" >
+            
+            <h:form id="newUserData">
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Documento:" />
+                        <h:inputText value="#{UserAsBean.newUsera.documento}" required="true"/>
+                        <h:outputText value="Nombre:" />
+                        <h:inputText value="#{UserAsBean.newUsera.nombre}" required="true"/>
+                        <h:outputText value="Segundo Nombre:" />
+                        <h:inputText value="#{UserAsBean.newUsera.segundoNombre}"/>
+                        <h:outputText value="Apellido:" />
+                        <h:inputText value="#{UserAsBean.newUsera.apellido}" required="true" />
+                        <h:outputText value="Segundo Apellido:" />
+                        <h:inputText value="#{UserAsBean.newUsera.segundoApellido}"/>
+                        <h:outputText value="Usuario: " />
+                        <h:inputText value="#{UserAsBean.newUsera.username}" required="true"/>
+                        <h:outputText value="Contraseña: " />
+                        <h:inputSecret value="#{UserAsBean.newUsera.password}" required="true"/>
+                        <h:outputText value="Permisos de Administrador: " />
+                        <p:selectBooleanCheckbox value="#{UserAsBean.newUsera.administrator}" />
+                    </h:panelGrid>
+                    <p:commandButton value="Crear" action="#{UserAsBean.createUseras()}" ajax="false"/>
+                    <p:commandButton value="Cancelar" onclick="createDialog.hide();" ajax="false"/>
+            </h:form>
+        </p:dialog>
+        
+        <p:dialog id="modifyDlg" widgetVar="modifyDialog"
+            header="Editar" appendToBody="true" modal="true" showEffect="explode" hideEffect="explode" >
+            <h:form id="buttonsEdit">
+                <h:panelGrid id="modifyData" columns="2">
+                    <h:outputText value="Contraseña" />
+                    <h:inputSecret value="#{UserAsBean.newPassword}" required="true" />
+                    <h:outputText value="Nueva Contraseña" />
+                    <h:inputSecret value="#{UserAsBean.newPassword2}" required="true" />
+                </h:panelGrid>
+                <p:commandButton value="Modificar" action="#{UserAsBean.editUseras()}" ajax="false"/>
+                <p:commandButton value="Cancelar" onclick="modifyDialog.hide();" />
+            </h:form>
+        </p:dialog>
+        
+        <p:dialog id="deleteDlg" widgetVar="deleteDialog"
+            header="Eliminar" appendToBody="true" modal="true" showEffect="explode" hideEffect="explode" >
+            <h:form id="buttonsDelete">
+                <h:panelGrid id="deleteData" columns="2">
+                    <h:outputText value="¿Está seguro que desea eliminar el usuario?" />
+                </h:panelGrid>
+                <p:commandButton value="Eliminar" action="#{UserAsBean.deleteUseras()}" ajax="false"/>
+                <p:commandButton value="Cancelar" onclick="deleteDialog.hide();" />
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>

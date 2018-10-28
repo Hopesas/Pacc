@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <ui:insert name="header" >
+            <ui:include src="header.xhtml" />
+        </ui:insert>
+        <title>Plan de Atención Integral</title>
+    </h:head>
+    <h:body  style="background-color: #eeeeee">
+        <div class="hero-unit">
+            <div class="container">
+                #{UserAsBean.hasRights()}
+                <div class="row" align="center">
+                    <h:form>
+                        <h:outputText value="Ingrese el Número del Plan: " />
+                        <p:inputText id="documentoBuscar" value="#{PlanBean.codigo}" /> <br/>
+                        <p:commandButton styleClass="btn btn-primary" value="Buscar" action="#{PlanBean.buscarPlan()}" /><br/><br/>
+                        <h:outputLink target="_blank" value="PdfDiagnostico" styleClass="btn btn-large btn-primary">
+                            <h:outputText value="Crear PDF" />
+                        </h:outputLink>
+                    </h:form>
+                    <p:messages id="planMessage" showDetail="false" closable="true"/>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>

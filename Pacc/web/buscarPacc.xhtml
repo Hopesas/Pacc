@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <ui:insert name="header" >
+            <ui:include src="header.xhtml" />
+        </ui:insert>
+        <title>Plan de Atención Integral</title>
+    </h:head>
+    <h:body  style="background-color: #eeeeee">
+        #{UserAsBean.hasRights()}
+        <h:panelGroup id="formCriterio">
+            <p:dataTable id="patternsTable" var="criterio" value="#{BusquedaBean.busquedaList}" 
+                         selection="#{BusquedaBean.selectedCriterio}" selectionMode="single" rowKey="#{criterio.id}" >
+                    
+                <p:ajax event="rowSelect" listener="#{BusquedaBean.onRowSelect}"/>
+               
+                <f:facet id="titulo" name="header">
+                    Criterios de Busqueda para el Plan
+                </f:facet>
+
+                <p:column headerText="Número">
+                    #{criterio.id}
+                </p:column>
+
+                <p:column headerText="Criterio">
+                    #{criterio.definicion}
+                </p:column>
+            </p:dataTable>
+        </h:panelGroup>
+        <div align="center">
+            <h:form>
+                <p:commandButton styleClass="btn btn-primary" id="continueBtn" value="Continuar" action="#{BusquedaBean.continueToList()}"></p:commandButton>
+            </h:form>
+        </div>
+    </h:body>
+</html>

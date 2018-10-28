@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <ui:insert name="header" >
+            <ui:include src="header.xhtml" />
+        </ui:insert>
+        <title>Plan de Atención</title>
+    </h:head>
+    <h:body  style="background-color: #eeeeee">  
+        #{UserAsBean.hasRights()}
+        <h:panelGroup id="formPlanes">
+            <p:dataTable id="patternsTable" var="plan" value="#{PlanBusquedaBean.planesMPList}"  paginator="true" rows="20"
+                         selection="#{PlanBusquedaBean.selectedPlanMP}" selectionMode="single" rowKey="#{plan.id}" >
+                    
+                <p:ajax event="rowSelect" listener="#{PlanBusquedaBean.onRowSelect}"/>
+               
+                <f:facet id="titulo" name="header">
+                    Planes
+                </f:facet>
+
+                <p:column headerText="Diagnostico">
+                    #{plan.id}
+                </p:column>
+
+                <p:column headerText="Documento">
+                    #{plan.documentoPaciente}
+                </p:column>
+                
+                <p:column headerText="Nombre del Paciente">
+                    #{plan.nombre}
+                </p:column>
+
+                <p:column headerText="Fecha de Diagnostico">
+                    #{plan.fecha}
+                </p:column>
+            </p:dataTable>
+        </h:panelGroup>
+        <div align="center">
+            <h:form>
+                <h:outputLink target="_blank" value="PdfDiagnostico" styleClass="btn btn-large btn-primary">
+                                    <h:outputText value="Crear PDF" />
+                </h:outputLink>
+            </h:form>
+        </div>
+    </h:body>
+</html>
+

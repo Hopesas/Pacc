@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"    
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <ui:insert name="header" >
+            <ui:include src="header.xhtml" />
+        </ui:insert>
+        <title>Plan de Atención de Cuidado</title>
+    </h:head>
+    <h:body  style="background-color: #eeeeee">
+        <div class="hero-unit" align="center">
+            <p:messages id="passMessage" showDetail="false" closable="true"/> 
+            <h:graphicImage value="#{resource['img:proceso.png']}" width="800"/>
+            <div class="container">
+                <br/>
+                <h:form>
+                    <p:commandButton styleClass="btn btn-primary" value="Plan de Cuidado (PACC)" action="paciente.xhmtl?faces-redirect=true" />
+                    <p:commandButton styleClass="btn btn-primary" value="Mis Planes" action="misPlanes.xhtml?faces-redirect=true"/>
+                    <br/>
+                    <h:form>
+                        <h:outputLink target="_blank" value="Cie10.html" styleClass="btn btn-large btn-primary">
+                            <h:outputText value="Consulta el CIE10"/>
+                        </h:outputLink>
+                    </h:form>
+                </h:form>
+                <p:dialog id="modifyDlgUser" widgetVar="modifyDialogUser"
+                    header="Cambiar Contraseña" appendToBody="true" modal="true" showEffect="explode" hideEffect="explode" >
+                    <h:form id="buttonsChangePass">
+                        <h:panelGrid id="changePassData" columns="2">
+                            <h:outputText value="Nueva Contraseña" />
+                            <h:inputSecret value="#{UserAsBean.newPassword}" />
+                            <h:outputText value="Repita la Nueva Contraseña" />
+                            <h:inputSecret value="#{UserAsBean.newPassword2}"/>
+                        </h:panelGrid>
+                        <p:commandButton value="Modificar" action="#{UserAsBean.changePassword()}" ajax="false"/>
+                        <p:commandButton value="Cancelar" onclick="modifyDialogUser.hide();" />
+                    </h:form>
+                </p:dialog>
+            </div>
+        </div>
+    </h:body>
+</html>
